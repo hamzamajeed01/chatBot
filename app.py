@@ -23,7 +23,7 @@ generation_config = {
 model = genai.GenerativeModel(
     model_name="gemini-1.5-flash",
     generation_config=generation_config,
-    system_instruction="I will ask questions; try to answer them perfectly.",
+    system_instruction="I will ask questions ; try to answer them perfectly.",
 )
 
 # Ensure the uploads directory exists
@@ -100,4 +100,5 @@ def ask_question():
         return jsonify(answer=None, error=f'An error occurred: {str(e)}')
 
 if __name__ == '__main__':
-    app.run(debug=False,host='0.0.0.0')
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
