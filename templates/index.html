@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Chatbot</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>PDF Chatbot</h1>
+        <div class="upload-section">
+            <input type="file" id="fileInput" accept="application/pdf">
+            <button onclick="uploadFile()">Upload PDF</button>
+        </div>
+        <div class="question-section">
+            <input type="text" id="questionInput" placeholder="Ask a question about the PDF...">
+            <button onclick="sendQuestion()">Send Question</button>
+        </div>
+        <div class="chat-box" id="chat"></div>
+    </div>
+
+    <script>
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please select a file');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const response = await fetch('http://127.0.0.1:5000/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert('File uploaded successfully');
+            } else {
+                alert('File upload failed');
+            }
+        }
+
+        async function sendQuestion() {
+            const questionInput = document.getElementById('questionInput');
+            const question = questionInput.value;
+
+            if (!question) {
+                alert('Please enter a question');
+                return;
+            }
+
+            const response = await fetch('http://127.0.0.1:5000/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ question })
+            });
+
+            const result = await response.json();
+            const chatBox = document.getElementById('chat');
+            const newMessage = document.createElement('div');
+            newMessage.className = 'message';
+            newMessage.textContent = `Question: ${question}\n\n \n Answer: ${result.answer}`;
+            chatBox.appendChild(newMessage);
+
+            questionInput.value = '';
+        }
+    </script>
+</body>
+</html>
