@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from PyPDF2 import PdfReader
+import PyPDF2
 import google.generativeai as genai
 import os
 
@@ -38,7 +38,7 @@ def index():
 
 def extract_text_from_pdf(pdf_path):
     with open(pdf_path, 'rb') as file:
-        reader = PdfReader(file)
+        reader = PyPDF2.PdfReader(file)
         pdf_text = ''.join(page.extract_text() for page in reader.pages)
     return pdf_text
 
@@ -100,4 +100,4 @@ def ask_question():
         return jsonify(answer=None, error=f'An error occurred: {str(e)}')
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=False)
