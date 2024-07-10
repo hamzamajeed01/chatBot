@@ -100,4 +100,4 @@ def ask_question():
         return jsonify(answer=None, error=f'An error occurred: {str(e)}')
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=False, host='0.0.0.0',port=10000)
