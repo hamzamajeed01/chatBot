@@ -23,7 +23,7 @@ generation_config = {
 model = genai.GenerativeModel(
     model_name="gemini-1.5-flash",
     generation_config=generation_config,
-    system_instruction="I will ask questions ; try to answer them perfectly.",
+    system_instruction="You will be given a pdf text and you will be asked questions from the text of the pdf ; try to answer them perfectly.If no answer found from pdf text provide answer from your knowledge",
 )
 
 # Ensure the uploads directory exists
