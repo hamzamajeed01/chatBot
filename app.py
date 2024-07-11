@@ -18,8 +18,8 @@ generationConfig = {
 model = genai.GenerativeModel(
     model_name="gemini-1.5-flash",
     generation_config=generationConfig,
-    system_instruction="You will act as AI assistance and answer the questions being asked.",
-)
+    system_instruction="You are an AI assistant. Answer questions as accurately and helpfully as possible. If you don't know the answer, provide a response indicating that you don't have the information."
+    )
 
 chatSession = model.start_chat(history=[])
 
